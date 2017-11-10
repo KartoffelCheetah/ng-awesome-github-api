@@ -21,7 +21,12 @@ export class GithubSearchService {
       .get(link)
       .map((resp:Response)=>resp.json())
       .catch(err=>{
-          alert(err.json().message);
+          if (err.json && err.json().message) {
+            alert(err.json().message);
+        } else {
+            alert(err);
+        }
+
           return Observable.of({});
       })
       ;
