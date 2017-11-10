@@ -67,8 +67,11 @@ export class FormFieldsComponent implements OnInit {
   issues = [];
   repoIndex = undefined;
 
-  searchOpenedIssues (issues:boolean, repository:string, username:string, index:number) {
-      this.GHsearch.search(issues, repository, username)
+  searchOpenedIssues (repository:string, username:string, index:number) {
+      /***
+      **  This function searches issues for the index. repository
+      ***/
+      this.GHsearch.search(true, repository, username)
       .subscribe(resp=>{
           this.issues = resp.items;
           this.repoIndex = index;

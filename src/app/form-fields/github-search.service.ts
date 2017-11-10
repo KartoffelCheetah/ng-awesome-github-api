@@ -21,7 +21,7 @@ export class GithubSearchService {
       .get(link)
       .map((resp:Response)=>resp.json())
       .catch(err=>{
-          console.log(err);
+          alert(err.json().message);
           return Observable.of({});
       })
       ;
