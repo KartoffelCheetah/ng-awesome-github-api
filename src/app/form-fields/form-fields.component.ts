@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { GithubSearchService } from './github-search.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -11,7 +11,9 @@ import { Observable } from 'rxjs/Observable';
 })
 export class FormFieldsComponent implements OnInit {
 
-  constructor(public GHsearch:GithubSearchService) {
+  constructor(
+    public GHsearch:GithubSearchService,
+    public cdr:ChangeDetectorRef) {
     /***
     **  Input fields send request through GithubSearchService
     **  and the response lands in repositories array.
@@ -27,22 +29,30 @@ export class FormFieldsComponent implements OnInit {
       .switchMap(uname => {
           if (this.repository.value) {
               return this.GHsearch.search(
+                  false,
                   this.repository.value,
                   uname
           )} else {
               return Observable.of({});
           }
       })
-      .subscribe(repositories => this.repositories = repositories.items)
+      .subscribe(repositories => {
+          this.repositories = repositories.items;
+          this.repoIndex = undefined;
+      })
     //   repository name
       this.repository.valueChanges
       .debounceTime(dbTime)
       .distinctUntilChanged()
       .switchMap(repo => this.GHsearch.search(
+          false,
           repo,
           this.username.value
       ))
-      .subscribe(repositories => this.repositories = repositories.items)
+      .subscribe(repositories => {
+          this.repositories = repositories.items;
+          this.repoIndex = undefined;
+      })
    }
 
   ngOnInit() {
@@ -54,5 +64,16 @@ export class FormFieldsComponent implements OnInit {
 
   // results
   repositories = [];
+  issues = [];
+  repoIndex = undefined;
 
+  searchOpenedIssues (issues:boolean, repository:string, username:string, index:number) {
+      this.GHsearch.search(issues, repository, username)
+      .subscribe(resp=>{
+          this.issues = resp.items;
+          this.repoIndex = index;
+          this.cdr.detectChanges();
+      })
+      ;
+  }
 }

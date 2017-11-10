@@ -1,7 +1,18 @@
 :host {
     background-color: rgb(12, 22, 27);
     display: block;
+    padding: 5px 0;
 }
 label {
     display: block;
+    margin: 5px 0;
+}
+.repo {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 3px ridge black;
+    padding-right: 3px;
+}
+.repo:first-of-type {
+    border-top: 3px ridge black;
 }

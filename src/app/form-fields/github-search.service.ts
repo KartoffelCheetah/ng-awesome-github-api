@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { URLSearchParams, Http, Response } from '@angular/http';
+import { Http, Response } from '@angular/http';
 
 @Injectable()
 export class GithubSearchService {
 
   constructor( public http:Http ) { }
-  search(repository:string, username:string) {
+  search(issues:boolean, repository:string, username:string) {
 
       username = username ? `repo:${username}/` : '' ;
 
-      var par = new URLSearchParams();
-      par.set('q', username+repository);
+      var q = `?q=${username}${repository}`
+
+      var link = issues
+      ?`https://api.github.com/search/issues${q}+is:open`
+      :`https://api.github.com/search/repositories${q}`
+      ;
 
       return this.http
-      .get(`https://api.github.com/search/repositories`, { search: par })
+      .get(link)
       .map((resp:Response)=>resp.json())
       .catch(err=>{
           console.log(err);
