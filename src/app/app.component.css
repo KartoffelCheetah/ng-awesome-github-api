@@ -5,3 +5,10 @@
     background-color: slategrey;
     color: rgb(203, 221, 194);
 }
+header {
+    height: 8rem;
+    background-image: url("/assets/github-mark.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}

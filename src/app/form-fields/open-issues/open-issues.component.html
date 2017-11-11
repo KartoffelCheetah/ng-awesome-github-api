@@ -4,4 +4,4 @@
     </a>
 </div>
 <br>
-<a class="github-issues" target="_blank" href="{{repo.html_url}}/issues">more...</a>
+<a *ngIf="repo.open_issues_count>30" class="github-issues" target="_blank" href="{{repo.html_url}}/issues">more...</a>
