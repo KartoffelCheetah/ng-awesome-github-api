@@ -19,8 +19,13 @@ export class FormFieldsComponent implements OnInit {
     **  and the response lands in repositories array.
     ***/
 
-      var // milliseconds
-        dbTime = 1000;
+      var
+        dbTime = 1000, // milliseconds
+        subFunc = repositories => {
+            this.repositories = repositories.items;
+            this.repoIndex = undefined;
+            this.repoTotalCount = repositories.total_count;
+        }
 
     //   username
       this.username.valueChanges
@@ -30,29 +35,41 @@ export class FormFieldsComponent implements OnInit {
           if (this.repository.value) {
               return this.GHsearch.search(
                   false,
+                  1,
                   this.repository.value,
                   uname
           )} else {
               return Observable.of({});
           }
       })
-      .subscribe(repositories => {
-          this.repositories = repositories.items;
-          this.repoIndex = undefined;
-      })
+      .subscribe(subFunc)
     //   repository name
       this.repository.valueChanges
       .debounceTime(dbTime)
       .distinctUntilChanged()
       .switchMap(repo => this.GHsearch.search(
           false,
+          1,
           repo,
           this.username.value
       ))
-      .subscribe(repositories => {
-          this.repositories = repositories.items;
-          this.repoIndex = undefined;
+      .subscribe(subFunc)
+    //   page number
+      this.pageNumber.valueChanges
+      .debounceTime(dbTime)
+      .distinctUntilChanged()
+      .switchMap(pg => {
+          if (this.repository.value) {
+              return this.GHsearch.search(
+                  false,
+                  pg,
+                  this.repository.value,
+                  this.username.value
+          )} else {
+              return Observable.of({});
+          }
       })
+      .subscribe(subFunc)
    }
 
   ngOnInit() {
@@ -61,17 +78,19 @@ export class FormFieldsComponent implements OnInit {
   // fields
   repository = new FormControl();
   username = new FormControl();
+  pageNumber = new FormControl(1);
 
   // results
   repositories = [];
   issues = [];
   repoIndex = undefined;
+  repoTotalCount = 0;
 
   searchOpenedIssues (repository:string, username:string, index:number) {
       /***
       **  This function searches issues for the index. repository
       ***/
-      this.GHsearch.search(true, repository, username)
+      this.GHsearch.search(true, 1, repository, username)
       .subscribe(resp=>{
           this.issues = resp.items;
           this.repoIndex = index;

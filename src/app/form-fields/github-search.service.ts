@@ -6,15 +6,15 @@ import { Http, Response } from '@angular/http';
 export class GithubSearchService {
 
   constructor( public http:Http ) { }
-  search(issues:boolean, repository:string, username:string) {
+  search(issues:boolean, page:number, repository:string, username:string) {
 
       username = username ? `repo:${username}/` : '' ;
 
-      var q = `?q=${username}${repository}`
+      var q = `?q=${username}${repository}`;
 
       var link = issues
-      ?`https://api.github.com/search/issues${q}+is:open`
-      :`https://api.github.com/search/repositories${q}`
+      ?`https://api.github.com/search/issues${q}+is:open&page=${page}`
+      :`https://api.github.com/search/repositories${q}&page=${page}`
       ;
 
       return this.http

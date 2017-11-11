@@ -1,7 +1,7 @@
 :host {
     background-color: rgb(12, 22, 27);
     display: block;
-    padding: 5px 0;
+    padding: 1rem;
 }
 label {
     display: block;
@@ -15,4 +15,17 @@ label {
 }
 .repo:first-of-type {
     border-top: 3px ridge black;
+}
+.pages {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 3px;
+}
+.previous-page, .next-page {
+    background-color: slategrey;
+    padding: .2rem .6rem;
+    border: 3px ridge orange;
+}
+.repo-count {
+    font-weight: bold;
 }

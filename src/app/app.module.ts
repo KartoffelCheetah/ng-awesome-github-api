@@ -5,16 +5,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { FormFieldsComponent } from './form-fields/form-fields.component';
+import { GhpageCountPipe } from './form-fields/ghpage-count.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormFieldsComponent
+    FormFieldsComponent,
+    GhpageCountPipe
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

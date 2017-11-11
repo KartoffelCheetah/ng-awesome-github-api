@@ -1,10 +1,16 @@
 <label>
-    Repository:
+    Repository:<br>
     <input [formControl]="repository" type="text">
 </label>
 <label>
-    Username:
+    Username:<br>
     <input [formControl]="username" type="text" placeholder="Optional">
+</label>
+<label>
+    Page:<br>
+    <input type="number" [formControl]="pageNumber" min="1">
+    out of
+    <span class="repo-count">{{repoTotalCount | ghpageCount}}</span>
 </label>
 <div class="repo repo{{i}}" *ngFor="let repo of repositories;let i=index">
     <div class="desc">
@@ -30,6 +36,8 @@
                     {{issue.title}}
                 </a>
             </div>
+            <br>
+            <a target="_blank" href="{{repo.html_url}}/issues">more...</a>
         </div>
     </div>
 </div>
