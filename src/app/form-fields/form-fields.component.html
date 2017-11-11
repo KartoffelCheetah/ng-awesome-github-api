@@ -1,17 +1,24 @@
-<label>
-    Repository:<br>
-    <input [formControl]="repository" type="text">
-</label>
-<label>
-    Username:<br>
-    <input [formControl]="username" type="text" placeholder="Optional">
-</label>
-<label>
-    Page:<br>
-    <input type="number" [formControl]="pageNumber" min="1">
-    out of
-    <span class="repo-count">{{repoTotalCount | ghpageCount}}</span>
-</label>
+<header>
+    <div class="labels">
+        <label>
+            Repository:<br>
+            <input [formControl]="repository" type="text">
+        </label>
+        <label>
+            Username:<br>
+            <input [formControl]="username" type="text" placeholder="Optional">
+        </label>
+        <label>
+            Page:<br>
+            <input type="number" [formControl]="pageNumber" min="1">
+            out of
+            <span class="repo-count">{{repoTotalCount | ghpageCount}}</span>
+        </label>
+    </div>
+    <div class="messages">
+        <div *ngIf="waiting"><i>waiting...</i></div>
+    </div>
+</header>
 <div class="repo repo{{i}}" *ngFor="let repo of repositories;let i=index">
     <div class="desc">
         <a target="_blank" href="{{repo.html_url}}">
@@ -29,15 +36,9 @@
             Open Issues: {{repo.open_issues_count}}
         </button>
     </div>
-    <div class="open_issues">
-        <div *ngIf="repoIndex==i">
-            <div *ngFor="let issue of issues">
-                <a target="_blank" href="{{issue.html_url}}">
-                    {{issue.title}}
-                </a>
-            </div>
-            <br>
-            <a target="_blank" href="{{repo.html_url}}/issues">more...</a>
-        </div>
-    </div>
+    <app-open-issues class="open_issues"
+        *ngIf="repoIndex==i && issues.length"
+        [issues]="issues"
+        [repo]="repo">
+    </app-open-issues>
 </div>

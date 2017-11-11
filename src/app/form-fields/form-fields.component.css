@@ -7,6 +7,9 @@ label {
     display: block;
     margin: 5px 0;
 }
+input[type="number"] {
+    max-width: 8rem;
+}
 .repo {
     display: flex;
     justify-content: space-between;
@@ -21,11 +24,21 @@ label {
     justify-content: space-between;
     margin-right: 3px;
 }
-.previous-page, .next-page {
-    background-color: slategrey;
-    padding: .2rem .6rem;
-    border: 3px ridge orange;
-}
 .repo-count {
     font-weight: bold;
+}
+header {
+    display: flex;
+    align-items: center;
+}
+.messages {
+    margin-left: .8rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.messages {
+    color: rgb(207, 119, 11);
+    font-weight: bold;
+    font-size: 110%;
 }

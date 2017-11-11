@@ -25,6 +25,7 @@ export class FormFieldsComponent implements OnInit {
             this.repositories = repositories.items;
             this.repoIndex = undefined;
             this.repoTotalCount = repositories.total_count;
+            this.waiting = false;
         }
 
     //   username
@@ -32,6 +33,7 @@ export class FormFieldsComponent implements OnInit {
       .debounceTime(dbTime)
       .distinctUntilChanged()
       .switchMap(uname => {
+          this.waiting = true;
           if (this.repository.value) {
               return this.GHsearch.search(
                   false,
@@ -47,18 +49,22 @@ export class FormFieldsComponent implements OnInit {
       this.repository.valueChanges
       .debounceTime(dbTime)
       .distinctUntilChanged()
-      .switchMap(repo => this.GHsearch.search(
-          false,
-          1,
-          repo,
-          this.username.value
-      ))
+      .switchMap(repo => {
+          this.waiting = true;
+          return this.GHsearch.search(
+              false,
+              1,
+              repo,
+              this.username.value
+          );
+      })
       .subscribe(subFunc)
     //   page number
       this.pageNumber.valueChanges
       .debounceTime(dbTime)
       .distinctUntilChanged()
       .switchMap(pg => {
+          this.waiting = true;
           if (this.repository.value) {
               return this.GHsearch.search(
                   false,
@@ -84,8 +90,12 @@ export class FormFieldsComponent implements OnInit {
   repositories = [];
   issues = [];
   repoIndex = undefined;
-  repoTotalCount = 0;
+  repoTotalCount = undefined;
 
+  // messages
+  waiting = false;
+
+  // functions
   searchOpenedIssues (repository:string, username:string, index:number) {
       /***
       **  This function searches issues for the index. repository

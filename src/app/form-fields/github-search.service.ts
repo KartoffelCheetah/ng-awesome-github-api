@@ -21,8 +21,14 @@ export class GithubSearchService {
       .get(link)
       .map((resp:Response)=>resp.json())
       .catch(err=>{
+        //   check if err message arrived
           if (err.json && err.json().message) {
-            alert(err.json().message);
+            //   check if err message is not just val.fail.
+              if (err.json().message != "Validation Failed"){
+                  alert(err.json().message);
+              } else {
+                //   Validation failed
+              }
         } else {
             alert(err);
         }

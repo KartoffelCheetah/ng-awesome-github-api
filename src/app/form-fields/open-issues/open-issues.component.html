@@ -1,0 +1,7 @@
+<div class="issue" *ngFor="let issue of issues">
+    <a target="_blank" href="{{issue.html_url}}">
+        {{issue.title}}
+    </a>
+</div>
+<br>
+<a class="github-issues" target="_blank" href="{{repo.html_url}}/issues">more...</a>
