@@ -46,17 +46,5 @@ header {
     font-size: 110%;
 }
 .btn-open-issues {
-    background-color: transparent;
-    color: rgb(131, 168, 189);
-    border: 2px solid rgb(131, 168, 189);
-    padding: .4rem .8rem;
     margin: .4rem 0;
-    border-radius: 0;
-}
-.btn-open-issues:hover {
-    border-color: rgb(122, 149, 164);
-}
-.btn-open-issues:active {
-    border-color: rgb(122, 149, 164);
-    background-color: rgba(255, 255, 255, 0.05);
 }
