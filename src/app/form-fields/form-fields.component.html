@@ -32,7 +32,7 @@
         <br>
         Forks: {{repo.forks_count}}
         <br>
-        <button type="button" (click)="searchOpenedIssues(repo.name,repo.owner.login, i);">
+        <button class="btn-open-issues" type="button" (click)="searchOpenedIssues(repo.name,repo.owner.login, i);">
             Open Issues: {{repo.open_issues_count}}
         </button>
     </div>
