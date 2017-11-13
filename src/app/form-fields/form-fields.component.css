@@ -47,10 +47,10 @@ header {
     margin: .4rem 0;
 }
 input {
-    display: block;
+    /*display: block;*/
     width: 100%;
     max-width: 34rem;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
     padding: .4rem .2rem;
     background-color: rgb(236, 241, 234);
     border-radius: 8px;
