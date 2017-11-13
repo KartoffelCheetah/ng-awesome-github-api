@@ -39,12 +39,25 @@ header {
     width: 100%;
     display: flex;
     justify-content: center;
-}
-.messages {
     color: rgb(207, 119, 11);
     font-weight: bold;
     font-size: 110%;
 }
 .btn-open-issues {
     margin: .4rem 0;
+}
+input {
+    display: block;
+    width: 100%;
+    max-width: 34rem;
+    margin-top: 1rem;
+    padding: .4rem .2rem;
+    background-color: rgb(236, 241, 234);
+    border-radius: 8px;
+    font-weight: bold;
+    letter-spacing: .15rem;
+    outline: none;
+}
+input:focus {
+    background-color: rgb(188, 200, 198);
 }
