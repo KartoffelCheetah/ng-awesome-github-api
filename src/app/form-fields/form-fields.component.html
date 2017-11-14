@@ -2,15 +2,15 @@
     <div class="labels">
         <label>
             Repository:<br>
-            <input [formControl]="repository" type="text">
+            <input [formControl]="repository" type="text" placeholder="Search repo by name...">
         </label>
         <label>
             Username:<br>
-            <input [formControl]="username" type="text" placeholder="Optional">
+            <input [formControl]="username" type="text" placeholder="Search repo by author...">
         </label>
         <label>
             Page:<br>
-            <input type="number" [formControl]="pageNumber" min="1">
+            <input type="number" [formControl]="pageNumber" min="1" placeholder="Default:1">
             out of
             <span class="repo-count">{{repoTotalCount | ghpageCount}}</span>
         </label>

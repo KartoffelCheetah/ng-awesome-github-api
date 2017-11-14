@@ -26,6 +26,7 @@ export class FormFieldsComponent implements OnInit {
             this.repoIndex = undefined;
             this.repoTotalCount = repositories.total_count;
             this.waiting = false;
+            console.log('!!!',repositories);
         }
 
     //   username
@@ -34,15 +35,20 @@ export class FormFieldsComponent implements OnInit {
       .distinctUntilChanged()
       .switchMap(uname => {
           this.waiting = true;
+        //   this.pageNumber.setValue(1);
           if (this.repository.value) {
-              return this.GHsearch.search(
-                  false,
-                  1,
-                  this.repository.value,
-                  uname
-          )} else {
-              return Observable.of({});
-          }
+              return this.GHsearch.search({
+                  searchType: 'repositories',
+                  page: this.pageNumber.value,
+                  repository: this.repository.value,
+                  username: uname
+          })} else {
+            //   return Observable.of({});
+              return this.GHsearch.search({
+                  searchType: 'users',
+                  page: this.pageNumber.value,
+                  username: uname
+          })}
       })
       .subscribe(subFunc)
     //   repository name
@@ -51,12 +57,13 @@ export class FormFieldsComponent implements OnInit {
       .distinctUntilChanged()
       .switchMap(repo => {
           this.waiting = true;
-          return this.GHsearch.search(
-              false,
-              1,
-              repo,
-              this.username.value
-          );
+        //   this.pageNumber.setValue(1);
+          return this.GHsearch.search({
+              searchType: 'repositories',
+              page: this.pageNumber.value,
+              repository: repo,
+              username: this.username.value
+          })
       })
       .subscribe(subFunc)
     //   page number
@@ -66,14 +73,18 @@ export class FormFieldsComponent implements OnInit {
       .switchMap(pg => {
           this.waiting = true;
           if (this.repository.value) {
-              return this.GHsearch.search(
-                  false,
-                  pg,
-                  this.repository.value,
-                  this.username.value
-          )} else {
-              return Observable.of({});
-          }
+              return this.GHsearch.search({
+                  searchType: 'repositories',
+                  page: pg,
+                  repository: this.repository.value,
+                  username: this.username.value
+          })} else {
+            //   return Observable.of({});
+              return this.GHsearch.search({
+                  searchType: 'users',
+                  page: pg,
+                  username: this.username.value
+          })}
       })
       .subscribe(subFunc)
    }
@@ -100,7 +111,12 @@ export class FormFieldsComponent implements OnInit {
       /***
       **  This function searches issues for the index. repository
       ***/
-      this.GHsearch.search(true, 1, repository, username)
+      this.GHsearch.search({
+          searchType: 'issues',
+          page: 1,
+          repository: repository,
+          username: username
+      })
       .subscribe(resp=>{
           this.issues = resp.items;
           this.repoIndex = index;
