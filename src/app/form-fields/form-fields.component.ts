@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { GithubSearchService } from './github-search.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -28,58 +28,28 @@ export class FormFieldsComponent implements OnInit {
             this.waiting = false;
         }
 
-    //   username
-      this.username.valueChanges
+      this.GHform.valueChanges
       .debounceTime(dbTime)
       .distinctUntilChanged()
-      .switchMap(uname => {
+      .switchMap(fields => {
           this.waiting = true;
+          var searchType: "users" | "repositories" | "issues";
           if (this.repository.value) {
-              return this.GHsearch.search({
-                  searchType: 'repositories',
-                  page: this.pageNumber.value,
-                  repository: this.repository.value,
-                  username: uname
-          })} else {
-              return this.GHsearch.search({
-                  searchType: 'users',
-                  page: this.pageNumber.value,
-                  username: uname
-          })}
-      })
-      .subscribe(subFunc)
-    //   repository name
-      this.repository.valueChanges
-      .debounceTime(dbTime)
-      .distinctUntilChanged()
-      .switchMap(repo => {
-          this.waiting = true;
+            //   r:1, u:0/1, p:0/1
+              searchType = 'repositories';
+          } else if (this.username.value) {
+            //   r:0, u:1, p:0/1
+              searchType = 'users';
+          } else {
+            //   r:0, u:0, p:0/1
+            searchType = 'repositories';
+          }
           return this.GHsearch.search({
-              searchType: 'repositories',
-              page: this.pageNumber.value,
-              repository: repo,
-              username: this.username.value
+              searchType:searchType,
+              page: fields.pageNumber,
+              username: fields.username,
+              repository: fields.repository
           })
-      })
-      .subscribe(subFunc)
-    //   page number
-      this.pageNumber.valueChanges
-      .debounceTime(dbTime)
-      .distinctUntilChanged()
-      .switchMap(pg => {
-          this.waiting = true;
-          if (this.repository.value) {
-              return this.GHsearch.search({
-                  searchType: 'repositories',
-                  page: pg,
-                  repository: this.repository.value,
-                  username: this.username.value
-          })} else {
-              return this.GHsearch.search({
-                  searchType: 'users',
-                  page: pg,
-                  username: this.username.value
-          })}
       })
       .subscribe(subFunc)
    }
@@ -91,6 +61,11 @@ export class FormFieldsComponent implements OnInit {
   repository = new FormControl();
   username = new FormControl();
   pageNumber = new FormControl(1);
+  GHform = new FormGroup({
+      repository: this.repository,
+      username: this.username,
+      pageNumber: this.pageNumber,
+  });
 
   // results
   repositories = [];
