@@ -26,7 +26,6 @@ export class FormFieldsComponent implements OnInit {
             this.repoIndex = undefined;
             this.repoTotalCount = repositories.total_count;
             this.waiting = false;
-            console.log('!!!',repositories);
         }
 
     //   username
@@ -35,7 +34,6 @@ export class FormFieldsComponent implements OnInit {
       .distinctUntilChanged()
       .switchMap(uname => {
           this.waiting = true;
-        //   this.pageNumber.setValue(1);
           if (this.repository.value) {
               return this.GHsearch.search({
                   searchType: 'repositories',
@@ -43,7 +41,6 @@ export class FormFieldsComponent implements OnInit {
                   repository: this.repository.value,
                   username: uname
           })} else {
-            //   return Observable.of({});
               return this.GHsearch.search({
                   searchType: 'users',
                   page: this.pageNumber.value,
@@ -57,7 +54,6 @@ export class FormFieldsComponent implements OnInit {
       .distinctUntilChanged()
       .switchMap(repo => {
           this.waiting = true;
-        //   this.pageNumber.setValue(1);
           return this.GHsearch.search({
               searchType: 'repositories',
               page: this.pageNumber.value,
@@ -79,7 +75,6 @@ export class FormFieldsComponent implements OnInit {
                   repository: this.repository.value,
                   username: this.username.value
           })} else {
-            //   return Observable.of({});
               return this.GHsearch.search({
                   searchType: 'users',
                   page: pg,
