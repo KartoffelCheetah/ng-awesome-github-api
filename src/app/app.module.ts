@@ -9,13 +9,15 @@ import { GhpageCountPipe } from './pipes/ghpage-count.pipe';
 import { AppComponent } from './app.component';
 import { FormFieldsComponent } from './components/form-fields/form-fields.component';
 import { OpenIssuesComponent } from './components/form-fields/open-issues/open-issues.component';
+import { RepoComponent } from './components/form-fields/repo/repo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormFieldsComponent,
     GhpageCountPipe,
-    OpenIssuesComponent
+    OpenIssuesComponent,
+    RepoComponent
   ],
   imports: [
     BrowserModule,

@@ -19,26 +19,12 @@
         <div *ngIf="waiting"><i>waiting...</i></div>
     </div>
 </header>
-<div class="repo repo{{i}}" *ngFor="let repo of repositories;let i=index">
-    <div class="desc">
-        <a target="_blank" href="{{repo.html_url}}">
-            <h3>{{repo.name}}</h3>
-        </a>
-        Description: {{repo.description}}
-        <br>
-        Stargazers: {{repo.stargazers_count}}
-        <br>
-        Watchers: {{repo.watchers_count}}
-        <br>
-        Forks: {{repo.forks_count}}
-        <br>
-        <button class="btn-open-issues" type="button" (click)="searchOpenedIssues(repo.name,repo.owner.login, i);">
-            Open Issues: {{repo.open_issues_count}}
-        </button>
-    </div>
-    <app-open-issues class="open_issues"
-        *ngIf="repoIndex==i && issues.length"
-        [issues]="issues"
-        [repo]="repo">
-    </app-open-issues>
-</div>
+<app-repo
+    class="repo repo{{i}}"
+    *ngFor="let repo of repositories;let i=index"
+    [repo]="repo"
+    [i]="i"
+    [repoIndex]="repoIndex"
+    [issues]="issues"
+    [searchOpenedIssues]="searchOpenedIssues.bind(this)">
+</app-repo>
