@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { FormFieldsComponent } from './components/form-fields/form-fields.component';
 import { OpenIssuesComponent } from './components/form-fields/open-issues/open-issues.component';
 import { RepoComponent } from './components/form-fields/repo/repo.component';
+import { ShortenTextPipe } from './pipes/shorten-text.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { RepoComponent } from './components/form-fields/repo/repo.component';
     FormFieldsComponent,
     GhpageCountPipe,
     OpenIssuesComponent,
-    RepoComponent
+    RepoComponent,
+    ShortenTextPipe
   ],
   imports: [
     BrowserModule,

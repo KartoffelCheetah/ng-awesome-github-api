@@ -1,6 +1,6 @@
 <div class="issue" *ngFor="let issue of issues">
-    <a target="_blank" href="{{issue.html_url}}">
-        {{issue.title}}
+    <a target="_blank" href="{{issue.html_url}}" title="{{issue.title}}">
+        {{issue.title | shortenText}}
     </a>
 </div>
 <br>
