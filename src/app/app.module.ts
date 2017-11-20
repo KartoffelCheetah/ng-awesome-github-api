@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+// PIPES
+import { GhpageCountPipe } from './pipes/ghpage-count.pipe';
+// COMPONENTS
 import { AppComponent } from './app.component';
-import { FormFieldsComponent } from './form-fields/form-fields.component';
-import { GhpageCountPipe } from './form-fields/ghpage-count.pipe';
-import { OpenIssuesComponent } from './form-fields/open-issues/open-issues.component';
+import { FormFieldsComponent } from './components/form-fields/form-fields.component';
+import { OpenIssuesComponent } from './components/form-fields/open-issues/open-issues.component';
 
 @NgModule({
   declarations: [
