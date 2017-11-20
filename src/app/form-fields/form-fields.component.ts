@@ -42,7 +42,7 @@ export class FormFieldsComponent implements OnInit {
               searchType = 'users';
           } else {
             //   r:0, u:0, p:0/1
-            searchType = 'repositories';
+            return Observable.of({});
           }
           return this.GHsearch.search({
               searchType:searchType,
