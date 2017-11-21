@@ -2,12 +2,15 @@
 *Simple Angular application to search GitHub repos and their issues.*
 
 Search by repository name:
+
 ![Search by repository name](https://github.com/KartoffelCheetah/ng-awesome-github-api/blob/master/readme_resources/search_by_repo_name.gif)
 
 ... search by username:
+
 ![Search by username](https://github.com/KartoffelCheetah/ng-awesome-github-api/blob/master/readme_resources/search_by_user_name.gif)
 
 ... or use both at the same time:
+
 ![Use both](https://github.com/KartoffelCheetah/ng-awesome-github-api/blob/master/readme_resources/search_repo_and_user.gif)
 
 ## Angular CLI instructions:
