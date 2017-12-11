@@ -23,7 +23,7 @@ export class FormFieldsComponent implements OnInit {
             dbTime = 1000, // milliseconds
             subFunc = repositories => {
                 this.repositories = repositories.items;
-                this.repoIndex = undefined;
+                this.repoID = undefined;
                 this.repoTotalCount = repositories.total_count;
                 this.waiting = false;
             }
@@ -69,14 +69,14 @@ export class FormFieldsComponent implements OnInit {
     // results
     repositories = [];
     issues = [];
-    repoIndex = undefined;
+    repoID = undefined;
     repoTotalCount = undefined;
 
     // messages
     waiting = false;
 
     // functions
-    searchOpenedIssues (repository:string, username:string, index:number) {
+    searchOpenedIssues (repository:string, username:string, id:string) {
         /***
         **  This function searches issues for the index. repository
         ***/
@@ -88,7 +88,7 @@ export class FormFieldsComponent implements OnInit {
         })
         .subscribe(resp=>{
             this.issues = resp.items;
-            this.repoIndex = index;
+            this.repoID = id;
             this.cdr.detectChanges();
         })
         ;

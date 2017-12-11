@@ -20,11 +20,10 @@
     </div>
 </header>
 <app-repo
-    class="repo repo{{i}}"
-    *ngFor="let repo of repositories;let i=index"
+    class="repo {{repo.id}}"
+    *ngFor="let repo of repositories;"
     [repo]="repo"
-    [i]="i"
-    [repoIndex]="repoIndex"
+    [repoID]="repoID"
     [issues]="issues"
     [searchOpenedIssues]="searchOpenedIssues.bind(this)">
 </app-repo>

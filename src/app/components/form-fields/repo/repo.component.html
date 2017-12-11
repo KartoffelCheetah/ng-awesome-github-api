@@ -10,12 +10,12 @@
     <br>
     Forks: {{repo.forks_count}}
     <br>
-    <button class="btn-open-issues" type="button" (click)="searchOpenedIssues(repo.name,repo.owner.login, i);">
+    <button class="btn-open-issues" type="button" (click)="searchOpenedIssues(repo.name,repo.owner.login, repo.id);">
         Open Issues: {{repo.open_issues_count}}
     </button>
 </div>
 <app-open-issues class="open_issues"
-    *ngIf="repoIndex==i && issues.length"
+    *ngIf="repoID==repo.id && issues.length"
     [issues]="issues"
     [repo]="repo">
 </app-open-issues>

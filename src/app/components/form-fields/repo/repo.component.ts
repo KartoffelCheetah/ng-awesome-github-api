@@ -12,8 +12,7 @@ export class RepoComponent implements OnInit {
     ngOnInit() { }
 
     @Input() repo:any;
-    @Input() i:number;
-    @Input() repoIndex:number;
+    @Input() repoID:string;
     @Input() issues:any[];
     @Input() searchOpenedIssues:any;
 
