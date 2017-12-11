@@ -13,20 +13,20 @@ import { RepoComponent } from './components/form-fields/repo/repo.component';
 import { ShortenTextPipe } from './pipes/shorten-text.pipe';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FormFieldsComponent,
-    GhpageCountPipe,
-    OpenIssuesComponent,
-    RepoComponent,
-    ShortenTextPipe
-  ],
-  imports: [
-    BrowserModule,
-    HttpModule,
-    ReactiveFormsModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        FormFieldsComponent,
+        GhpageCountPipe,
+        OpenIssuesComponent,
+        RepoComponent,
+        ShortenTextPipe
+    ],
+    imports: [
+        BrowserModule,
+        HttpModule,
+        ReactiveFormsModule,
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
