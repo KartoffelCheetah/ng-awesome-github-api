@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GithubSearchService } from '../../services/github-search.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -11,9 +11,26 @@ import { Observable } from 'rxjs/Observable';
 })
 export class FormFieldsComponent implements OnInit {
 
-    constructor(
-        public GHsearch:GithubSearchService,
-        public cdr:ChangeDetectorRef) {
+    // fields
+    repository = new FormControl();
+    username = new FormControl();
+    pageNumber = new FormControl(1);
+    GHform = new FormGroup({
+        repository: this.repository,
+        username: this.username,
+        pageNumber: this.pageNumber,
+    });
+
+    // results
+    repositories = [];
+    issues = [];
+    repoID = undefined;
+    repoTotalCount = undefined;
+
+    // messages
+    waiting = false;
+
+    constructor(public GHsearch:GithubSearchService) {
         /***
         **  Input fields send request through GithubSearchService
         **  and the response lands in repositories array.
@@ -51,35 +68,13 @@ export class FormFieldsComponent implements OnInit {
                 repository: fields.repository
             })
         })
-        .subscribe(subFunc)
+        .subscribe(subFunc);
     }
 
-    ngOnInit() { }
+    ngOnInit() {}
 
-    // fields
-    repository = new FormControl();
-    username = new FormControl();
-    pageNumber = new FormControl(1);
-    GHform = new FormGroup({
-        repository: this.repository,
-        username: this.username,
-        pageNumber: this.pageNumber,
-    });
-
-    // results
-    repositories = [];
-    issues = [];
-    repoID = undefined;
-    repoTotalCount = undefined;
-
-    // messages
-    waiting = false;
-
-    // functions
-    searchOpenedIssues (repository:string, username:string, id:string) {
-        /***
-        **  This function searches issues for the index. repository
-        ***/
+    searchOpenedIssues(repository:string, username:string, id:string) {
+        // Searches issues of the repository with the id
         this.GHsearch.search({
             searchType: 'issues',
             page: 1,
@@ -89,7 +84,6 @@ export class FormFieldsComponent implements OnInit {
         .subscribe(resp=>{
             this.issues = resp.items;
             this.repoID = id;
-            this.cdr.detectChanges();
         })
         ;
     }
