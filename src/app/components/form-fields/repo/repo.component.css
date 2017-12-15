@@ -1,0 +1,16 @@
+.details li {
+    background-color: #3D4549;
+    margin-bottom: 1rem;
+    border: 3px solid rgb(203, 221, 194);
+    display: inline-block;
+}
+.details li span {
+    padding: .2rem .3rem;
+}
+.details li span:nth-child(2n+1) {
+    background-color: #252E32;
+    border-right: 3px solid rgb(203, 221, 194);
+}
+.desc-text {
+    display: flex !important;
+}

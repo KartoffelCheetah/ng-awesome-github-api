@@ -12,3 +12,6 @@ a {
     text-decoration: none;
     color: rgb(131, 168, 189);
 }
+ul {
+    list-style-type: none;
+}
