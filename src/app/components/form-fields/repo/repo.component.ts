@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
     selector: 'app-repo',
     templateUrl: './repo.component.html',
-    styleUrls: ['./repo.component.css']
+    styleUrls: ['./repo.component.styl']
 })
 export class RepoComponent implements OnInit {
 

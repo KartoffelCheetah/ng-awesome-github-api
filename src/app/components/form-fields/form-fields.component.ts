@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Component({
     selector: 'app-form-fields',
     templateUrl: './form-fields.component.html',
-    styleUrls: ['./form-fields.component.css'],
+    styleUrls: ['./form-fields.component.styl'],
     providers: [GithubSearchService]
 })
 export class FormFieldsComponent implements OnInit {
