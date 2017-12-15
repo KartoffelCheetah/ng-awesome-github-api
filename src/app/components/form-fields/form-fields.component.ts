@@ -23,9 +23,9 @@ export class FormFieldsComponent implements OnInit {
 
     // results
     repositories = [];
-    issues = [];
-    repoID = undefined;
     repoTotalCount = undefined;
+    repoID = undefined;
+    issues = [];
 
     // messages
     waiting = false;
@@ -35,13 +35,12 @@ export class FormFieldsComponent implements OnInit {
         **  Input fields send request through GithubSearchService
         **  and the response lands in repositories array.
         ***/
-
         var
-            dbTime = 1000, // milliseconds
+            dbTime = 1300, // milliseconds
             subFunc = repositories => {
                 this.repositories = repositories.items;
-                this.repoID = undefined;
                 this.repoTotalCount = repositories.total_count;
+                this.repoID = undefined;
                 this.waiting = false;
             }
         ;
@@ -73,13 +72,18 @@ export class FormFieldsComponent implements OnInit {
 
     ngOnInit() {}
 
-    searchOpenedIssues(repository:string, username:string, id:string) {
+    searchOpenedIssues(repo) {
         // Searches issues of the repository with the id
+        var
+            repoName = repo['name'],
+            userName = repo['owner']['login'],
+            {id} = repo
+        ;
         this.GHsearch.search({
             searchType: 'issues',
             page: 1,
-            repository: repository,
-            username: username
+            repository: repoName,
+            username: userName
         })
         .subscribe(resp=>{
             this.issues = resp.items;
