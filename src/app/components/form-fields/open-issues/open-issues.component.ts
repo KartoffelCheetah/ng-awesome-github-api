@@ -11,7 +11,6 @@ export class OpenIssuesComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }
-    @Input() issues;
     @Input() repo;
 
 }

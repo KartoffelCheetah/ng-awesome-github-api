@@ -1,4 +1,4 @@
-<div class="issue" *ngFor="let issue of issues">
+<div class="issue" *ngFor="let issue of repo.issues">
     <a target="_blank" href="{{issue.html_url}}" title="{{issue.title}}">
         {{issue.title | shortenText}}
     </a>

@@ -21,7 +21,6 @@
     </button>
 </div>
 <app-open-issues class="open_issues"
-    *ngIf="repoID==repo.id && issues.length"
-    [issues]="issues"
+    *ngIf="repoID==repo.id && repo.issues.length"
     [repo]="repo">
 </app-open-issues>

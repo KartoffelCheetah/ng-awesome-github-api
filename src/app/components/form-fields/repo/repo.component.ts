@@ -13,7 +13,6 @@ export class RepoComponent implements OnInit {
 
     @Input() repo:any;
     @Input() repoID:string;
-    @Input() issues:any[];
     @Input() searchOpenedIssues:any;
 
 }

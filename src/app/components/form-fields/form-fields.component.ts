@@ -25,7 +25,6 @@ export class FormFieldsComponent implements OnInit {
     repositories = [];
     repoTotalCount = undefined;
     repoID = undefined;
-    issues = [];
 
     // messages
     waiting = false;
@@ -71,7 +70,7 @@ export class FormFieldsComponent implements OnInit {
     ngOnInit() {}
 
     searchOpenedIssues(repo) {
-        /** Request the repo's issues from github. Fill in the this.issues list when done.*/
+        /** Request the repo's issues from github. Fill in the repo.issues list when done.*/
         var
             repoName = repo['name'],
             userName = repo['owner']['login'],
@@ -83,7 +82,8 @@ export class FormFieldsComponent implements OnInit {
             username: userName
         })
         .subscribe(resp=>{
-            this.issues = resp.items;
+            repo.issues = resp.items; // repo.issues is CREATED here
+            repo.open_issues_count = resp.total_count;
             this.repoID = id;
         })
         ;
