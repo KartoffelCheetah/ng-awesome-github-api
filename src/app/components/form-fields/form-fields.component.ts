@@ -15,7 +15,7 @@ export class FormFieldsComponent implements OnInit {
     repository = new FormControl();
     username = new FormControl();
     pageNumber = new FormControl(1);
-    GHform = new FormGroup({
+    apiForm = new FormGroup({
         repository: this.repository,
         username: this.username,
         pageNumber: this.pageNumber,
@@ -44,22 +44,20 @@ export class FormFieldsComponent implements OnInit {
                 this.waiting = false;
             }
         ;
-        this.GHform.valueChanges
+        this.apiForm.valueChanges
         .debounceTime(dbTime)
         .distinctUntilChanged()
         .switchMap(fields => {
             this.waiting = true;
             var searchType: "users" | "repositories" | "issues";
-            if (this.repository.value) {
-                //   r:1, u:0/1, p:0/1
-                searchType = 'repositories';
-            } else if (this.username.value) {
-                //   r:0, u:1, p:0/1
-                searchType = 'users';
-            } else {
-                //   r:0, u:0, p:0/1
-                return Observable.of({});
-            }
+
+            if (this.repository.value) { searchType = 'repositories'; }
+            else if (this.username.value) { searchType = 'users'; }
+            else { return Observable.of({}); }
+
+            /*    r:1, u:0/1, p:0/1 // repositories
+            **    r:0, u:1,   p:0/1 // users
+            **    r:0, u:0,   p:0/1 // return immediately */
             return this.GHsearch.search({
                 searchType:searchType,
                 page: fields.pageNumber,
@@ -73,7 +71,7 @@ export class FormFieldsComponent implements OnInit {
     ngOnInit() {}
 
     searchOpenedIssues(repo) {
-        // Searches issues of the repository with the id
+        /** Request the repo's issues from github. Fill in the this.issues list when done.*/
         var
             repoName = repo['name'],
             userName = repo['owner']['login'],
@@ -81,7 +79,6 @@ export class FormFieldsComponent implements OnInit {
         ;
         this.GHsearch.search({
             searchType: 'issues',
-            page: 1,
             repository: repoName,
             username: userName
         })
