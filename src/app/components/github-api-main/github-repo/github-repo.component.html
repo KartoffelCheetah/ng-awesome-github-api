@@ -20,7 +20,7 @@
         Open Issues: {{repo.open_issues_count}}
     </button>
 </div>
-<app-open-issues class="open_issues"
+<open-issues class="open_issues"
     *ngIf="repoID==repo.id && repo.issues.length"
     [repo]="repo">
-</app-open-issues>
+</open-issues>

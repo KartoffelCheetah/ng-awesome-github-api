@@ -9,8 +9,8 @@ import { ShortenTextPipe } from './pipes/shorten-text.pipe';
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { GithubApiMain } from './components/github-api-main/github-api-main.component';
-import { OpenIssuesComponent } from './components/github-api-main/open-issues/open-issues.component';
-import { RepoComponent } from './components/github-api-main/repo/repo.component';
+import { OpenIssuesComponent } from './components/github-api-main/github-repo/open-issues/open-issues.component';
+import { GithubRepoComponent } from './components/github-api-main/github-repo/github-repo.component';
 // SERVICES
 import { GithubSearchService } from './services/github-search.service';
 
@@ -20,7 +20,7 @@ import { GithubSearchService } from './services/github-search.service';
         GithubApiMain,
         GhpageCountPipe,
         OpenIssuesComponent,
-        RepoComponent,
+        GithubRepoComponent,
         ShortenTextPipe
     ],
     imports: [
