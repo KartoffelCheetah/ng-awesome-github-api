@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { GithubSearchService } from '../../services/github-search.service';
+import { AppError } from '../../common/app-error';
+import { NotFoundError } from '../../common/not-found-error';
+import { BadRequestError } from '../../common/bad-request-error';
+import { UnprocessableEntityError } from '../../common/unprocessable-entity-error';
 
 @Component({
     selector: 'github-api-main',
@@ -21,52 +25,65 @@ export class GithubApiMain implements OnInit {
     });
 
     // results
-    repositories = [];
-    repoTotalCount = undefined;
-    repoID = undefined;
+    repositories: any[] = [];
+    repoTotalCount: number = undefined;
+    repoID: string | number = undefined;
 
     // messages
-    waiting = false;
+    waiting:boolean = false;
 
-    constructor(public GHsearch:GithubSearchService) {
+    // conf
+    dbTime:number = 1300; // milliseconds
+
+    constructor(public GHsearch:GithubSearchService) { }
+
+    handleRepos(repositories: any) {
+        this.waiting = false; // response arrived
+        if (repositories instanceof AppError) {
+            // oups! repositories are actually an error
+            let error = repositories;
+            if (!('json' in error.originalError))
+                return console.log(error);
+            console.log('GitHub said:', error.originalError.json().message);
+            if (!(error instanceof NotFoundError || error instanceof UnprocessableEntityError))
+                alert('GitHub said: '+ error.originalError.json().message);
+
+        } else {
+            // we got the repositories
+            this.repositories = repositories.items;
+            this.repoTotalCount = repositories.total_count;
+            this.repoID = undefined;
+        }
+    }
+
+    ngOnInit() {
         /***
         **  Input fields send request through GithubSearchService
         **  and the response lands in repositories array.
         ***/
-        var
-            dbTime = 1300, // milliseconds
-            subFunc = repositories => {
-                this.repositories = repositories.items;
-                this.repoTotalCount = repositories.total_count;
-                this.repoID = undefined;
-                this.waiting = false;
-            }
-        ;
         this.apiForm.valueChanges
-        .debounceTime(dbTime)
-        .distinctUntilChanged()
-        .switchMap(fields => {
-            this.waiting = true;
-            var searchType: "users" | "repositories" | "issues";
+            .debounceTime(this.dbTime)
+            .distinctUntilChanged()
+            .switchMap(fields => {
+                this.waiting = true;
+                var searchType: "users" | "repositories" | "issues";
 
-            if (this.repository.value) { searchType = 'repositories'; }
-            else if (this.username.value) { searchType = 'users'; }
-            else { return Observable.of({}); }
+                if (this.repository.value) { searchType = 'repositories'; }
+                else if (this.username.value) { searchType = 'users'; }
+                else { return Observable.of({}); }
 
-            /*    r:1, u:0/1, p:0/1 // repositories
-            **    r:0, u:1,   p:0/1 // users
-            **    r:0, u:0,   p:0/1 // return immediately */
-            return this.GHsearch.search({
-                searchType:searchType,
-                page: fields.pageNumber,
-                username: fields.username,
-                repository: fields.repository
+                /*    r:1, u:0/1, p:0/1 // repositories
+                **    r:0, u:1,   p:0/1 // users
+                **    r:0, u:0,   p:0/1 // return immediately */
+                return this.GHsearch.search({
+                    searchType:searchType,
+                    page: fields.pageNumber,
+                    username: fields.username,
+                    repository: fields.repository
+                })
             })
-        })
-        .subscribe(subFunc);
+            .subscribe(this.handleRepos.bind(this));
     }
-
-    ngOnInit() {}
 
     searchOpenedIssues(repo) {
         /** Request the repo's issues from github. Fill in the repo.issues list when done.*/

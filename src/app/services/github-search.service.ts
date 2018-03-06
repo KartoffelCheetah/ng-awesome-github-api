@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response } from '@angular/http';
+import { AppError } from '../common/app-error';
+import { NotFoundError } from '../common/not-found-error';
+import { BadRequestError } from '../common/bad-request-error';
+import { UnprocessableEntityError } from '../common/unprocessable-entity-error';
 
 interface GitHubReq {
     searchType: 'users'|'repositories'|'issues',
@@ -15,14 +19,18 @@ export class GithubSearchService {
     constructor( public http:Http ) { }
     search(req: GitHubReq) {
 
-        var
-            link = "https://api.github.com/search/"+req.searchType,
-            params: any = {};
         // defaults
         if (!req.page) req.page=1;
         if (!req.repository) req.repository='';
         if (!req.username) req.username='';
 
+        var
+            link = "https://api.github.com/search/"+req.searchType,
+            params: any = { 'page': req.page };
+        if (req.searchType === 'users')
+            link = `https://api.github.com/${req.searchType}/${req.username}/repos`;
+
+        // params.q based on request.searchType
         switch (req.searchType) {
             case 'issues':
                 params.q =
@@ -30,7 +38,6 @@ export class GithubSearchService {
                 ? 'repo:'+req.username+'/'+req.repository+'+is:open'
                 : req.username+req.repository+'+is:open'
                 ;
-                params.page=req.page;
                 break;
             case 'repositories':
                 params.q =
@@ -38,11 +45,9 @@ export class GithubSearchService {
                 ? 'repo:'+req.username+'/'+req.repository
                 : req.username+req.repository
                 ;
-                params.page=req.page;
                 break;
             case 'users':
-                link = `https://api.github.com/${req.searchType}/${req.username}/repos`;
-                params.page=req.page;
+                // do not add params.q at all
                 break;
             default:
                 return;
@@ -64,24 +69,16 @@ export class GithubSearchService {
                     };
             }
         })
-        .catch(err=>{
-            //   check if err message arrived
-            if (err.json && err.json().message) {
-                //   check if err message is not in list
-                if (
-                    ["Validation Failed", "Not Found"]
-                    .indexOf(err.json().message) === -1
-                ){
-                    alert(err.json().message);
-                } else {
-                    //   err message was in list
-                }
-            } else {
-                alert(err);
-            }
-
-            return Observable.of({});
-        })
-        ;
+        .catch(this.handleError);
+    }
+    handleError(error:Response) {
+        if (error.status === 400)
+            return Observable.of(new BadRequestError(error)); //something broke
+        if (error.status === 422)
+            return Observable.of(new UnprocessableEntityError(error)); //dont care
+        if (error.status === 404)
+            return Observable.of(new NotFoundError(error)); //dont care
+        else
+            return Observable.of(new AppError(error)); //something broke
     }
 }

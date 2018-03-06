@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ErrorHandler } from '@angular/core';
 
 // PIPES
 import { GhpageCountPipe } from './pipes/ghpage-count.pipe';
@@ -13,6 +14,7 @@ import { OpenIssuesComponent } from './components/github-api-main/github-repo/op
 import { GithubRepoComponent } from './components/github-api-main/github-repo/github-repo.component';
 // SERVICES
 import { GithubSearchService } from './services/github-search.service';
+import { AppErrorHandler } from './common/app-error-handler';
 
 @NgModule({
     declarations: [
@@ -28,7 +30,10 @@ import { GithubSearchService } from './services/github-search.service';
         HttpModule,
         ReactiveFormsModule,
     ],
-    providers: [GithubSearchService],
+    providers: [
+        GithubSearchService,
+        { 'provide': ErrorHandler, 'useClass': AppErrorHandler }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
