@@ -5,19 +5,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // PIPES
 import { GhpageCountPipe } from './pipes/ghpage-count.pipe';
+import { ShortenTextPipe } from './pipes/shorten-text.pipe';
 // COMPONENTS
 import { AppComponent } from './app.component';
-import { FormFieldsComponent } from './components/form-fields/form-fields.component';
-import { OpenIssuesComponent } from './components/form-fields/open-issues/open-issues.component';
-import { RepoComponent } from './components/form-fields/repo/repo.component';
-import { ShortenTextPipe } from './pipes/shorten-text.pipe';
+import { GithubApiMain } from './components/github-api-main/github-api-main.component';
+import { OpenIssuesComponent } from './components/github-api-main/open-issues/open-issues.component';
+import { RepoComponent } from './components/github-api-main/repo/repo.component';
 // SERVICES
 import { GithubSearchService } from './services/github-search.service';
 
 @NgModule({
     declarations: [
         AppComponent,
-        FormFieldsComponent,
+        GithubApiMain,
         GhpageCountPipe,
         OpenIssuesComponent,
         RepoComponent,

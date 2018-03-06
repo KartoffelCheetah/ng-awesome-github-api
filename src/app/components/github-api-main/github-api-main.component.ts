@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import { GithubSearchService } from '../../services/github-search.service';
 
 @Component({
-    selector: 'app-form-fields',
-    templateUrl: './form-fields.component.html',
-    styleUrls: ['./form-fields.component.styl']
+    selector: 'github-api-main',
+    templateUrl: './github-api-main.component.html',
+    styleUrls: ['./github-api-main.component.styl']
 })
-export class FormFieldsComponent implements OnInit {
+export class GithubApiMain implements OnInit {
 
     // fields
     repository = new FormControl();
