@@ -19,13 +19,21 @@
         <div *ngIf="waiting"><i>waiting...</i></div>
     </div>
 </header>
-<ul *ngIf="repositories.length">
-    <li *ngFor="let repo of repositories">
-        <app-repo
-            class="repo {{repo.id}}"
-            [repo]="repo"
-            [repoID]="repoID"
-            [searchOpenedIssues]="searchOpenedIssues.bind(this)">
-        </app-repo>
-    </li>
-</ul>
+<section>
+    <div *ngIf="repositories?.length; then repositoryList else noRepositories"></div>
+    <ng-template #noRepositories>
+        <h2 class="no-repo">No repositories found</h2>
+    </ng-template>
+    <ng-template #repositoryList>
+        <ul>
+            <li *ngFor="let repo of repositories">
+                <app-repo
+                    class="repo {{repo.id}}"
+                    [repo]="repo"
+                    [repoID]="repoID"
+                    [searchOpenedIssues]="searchOpenedIssues.bind(this)">
+                </app-repo>
+            </li>
+        </ul>
+    </ng-template>
+</section>
