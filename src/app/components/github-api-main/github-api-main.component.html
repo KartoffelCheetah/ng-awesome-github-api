@@ -19,10 +19,13 @@
         <div *ngIf="waiting"><i>waiting...</i></div>
     </div>
 </header>
-<app-repo
-    class="repo {{repo.id}}"
-    *ngFor="let repo of repositories;"
-    [repo]="repo"
-    [repoID]="repoID"
-    [searchOpenedIssues]="searchOpenedIssues.bind(this)">
-</app-repo>
+<ul *ngIf="repositories.length">
+    <li *ngFor="let repo of repositories">
+        <app-repo
+            class="repo {{repo.id}}"
+            [repo]="repo"
+            [repoID]="repoID"
+            [searchOpenedIssues]="searchOpenedIssues.bind(this)">
+        </app-repo>
+    </li>
+</ul>
