@@ -1,7 +1,9 @@
-<div class="issue" *ngFor="let issue of repo.issues">
-    <a target="_blank" href="{{issue.html_url}}" title="{{issue.title}}">
-        {{issue.title | shortenText}}
-    </a>
-</div>
+<ul>
+    <li class="issue" *ngFor="let issue of repo.issues">
+        <a target="_blank" href="{{issue.html_url}}" title="{{issue.title}}">
+            {{issue.title | shortenText}}
+        </a>
+    </li>
+</ul>
 <br>
 <a *ngIf="repo.open_issues_count>30" class="github-issues" target="_blank" href="{{repo.html_url}}/issues">more...</a>
