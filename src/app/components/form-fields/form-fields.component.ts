@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { GithubSearchService } from '../../services/github-search.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-form-fields',
     templateUrl: './form-fields.component.html',
-    styleUrls: ['./form-fields.component.styl'],
-    providers: [GithubSearchService]
+    styleUrls: ['./form-fields.component.styl']
 })
 export class FormFieldsComponent implements OnInit {
 

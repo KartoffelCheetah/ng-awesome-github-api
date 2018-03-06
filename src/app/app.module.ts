@@ -11,6 +11,8 @@ import { FormFieldsComponent } from './components/form-fields/form-fields.compon
 import { OpenIssuesComponent } from './components/form-fields/open-issues/open-issues.component';
 import { RepoComponent } from './components/form-fields/repo/repo.component';
 import { ShortenTextPipe } from './pipes/shorten-text.pipe';
+// SERVICES
+import { GithubSearchService } from './services/github-search.service';
 
 @NgModule({
     declarations: [
@@ -26,7 +28,7 @@ import { ShortenTextPipe } from './pipes/shorten-text.pipe';
         HttpModule,
         ReactiveFormsModule,
     ],
-    providers: [],
+    providers: [GithubSearchService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
