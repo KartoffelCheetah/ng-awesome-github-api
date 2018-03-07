@@ -1,0 +1,6 @@
+<ul>
+    <li *ngFor="let error of errors" (click)="deleteError(error)">
+        <span class="status">{{error?.status}}</span>
+        <span class="message">{{error?.message}}</span>
+    </li>
+</ul>

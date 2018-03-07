@@ -34,19 +34,21 @@ export class GithubApiMain implements OnInit {
 
     // conf
     dbTime:number = 1300; // milliseconds
+    private error:any;
 
     constructor(public GHsearch:GithubSearchService) { }
 
     handleRepos(repositories: any) {
         this.waiting = false; // response arrived
+
         if (repositories instanceof AppError) {
             // oups! repositories are actually an error
             let error = repositories;
-            if (!('json' in error.originalError))
-                return console.log(error);
-            console.log('GitHub said:', error.originalError.json().message);
+            error.message = 'Github said: ' + error.message;
+            // somthing very unexpected happened
             if (!(error instanceof NotFoundError || error instanceof UnprocessableEntityError))
-                alert('GitHub said: '+ error.originalError.json().message);
+                alert(error.message);
+            this.error = error;
 
         } else {
             // we got the repositories

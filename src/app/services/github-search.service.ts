@@ -73,10 +73,12 @@ export class GithubSearchService {
         .catch(this.handleError);
     }
     handleError(error:Response) {
+        console.log(error.status);
+        console.log(error.json())
         if (error.status === 400)
             return Observable.of(new BadRequestError(error)); //something broke
         if (error.status === 422)
-            return Observable.of(new UnprocessableEntityError(error)); //dont care
+            return Observable.of(new UnprocessableEntityError(error)); //dont care or probably care tricky one
         if (error.status === 404)
             return Observable.of(new NotFoundError(error)); //dont care
         else
