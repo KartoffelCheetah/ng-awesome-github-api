@@ -18,32 +18,33 @@ export class GithubSearchService {
 
     constructor( public http:Http ) { }
     search(req: GitHubReq) {
+        let {searchType, page, repository, username} = req;
 
         // defaults
-        if (!req.page) req.page=1;
-        if (!req.repository) req.repository='';
-        if (!req.username) req.username='';
+        if (!page) page=1;
+        if (!repository) repository='';
+        if (!username) username='';
 
         var
-            link = "https://api.github.com/search/"+req.searchType,
-            params: any = { 'page': req.page };
-        if (req.searchType === 'users')
-            link = `https://api.github.com/${req.searchType}/${req.username}/repos`;
+            link = "https://api.github.com/search/"+searchType,
+            params: any = { 'page': page };
+        if (searchType === 'users')
+            link = `https://api.github.com/${searchType}/${username}/repos`;
 
         // params.q based on request.searchType
-        switch (req.searchType) {
+        switch (searchType) {
             case 'issues':
                 params.q =
-                req.username
-                ? 'repo:'+req.username+'/'+req.repository+'+is:open'
-                : req.username+req.repository+'+is:open'
+                username
+                ? 'repo:'+username+'/'+repository+'+is:open'
+                : username+repository+'+is:open'
                 ;
                 break;
             case 'repositories':
                 params.q =
-                req.username
-                ? 'repo:'+req.username+'/'+req.repository
-                : req.username+req.repository
+                username
+                ? 'repo:'+username+'/'+repository
+                : username+repository
                 ;
                 break;
             case 'users':
@@ -56,7 +57,7 @@ export class GithubSearchService {
         return this.http
         .get(link, {params:params})
         .map((resp:Response)=>{
-            switch (req.searchType) {
+            switch (searchType) {
                 case 'issues':
                     return resp.json();
                 case 'repositories':
