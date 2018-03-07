@@ -6,8 +6,11 @@
 header
     display: flex
     align-items: center
+    @media (max-width:30rem) {
+        flex-direction: column
+    }
     .messages
-        margin-left: .8rem
+        margin: .8rem
         width: 100%
         display: flex;
         justify-content: center
@@ -39,8 +42,3 @@ section
     border-top: 3px ridge black
     .no-repo
         text-align: center
-    .repo
-        display: flex;
-        justify-content: space-between
-        border-bottom: 3px ridge black
-        padding-right: 3px

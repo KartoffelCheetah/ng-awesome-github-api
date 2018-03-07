@@ -28,7 +28,6 @@
         <ul>
             <li *ngFor="let repo of repositories">
                 <github-repo
-                    class="repo {{repo.id}}"
                     [repo]="repo"
                     [repoID]="repoID"
                     [searchOpenedIssues]="searchOpenedIssues.bind(this)">
