@@ -9,8 +9,12 @@ export class GithubRepoComponent implements OnInit {
     @Input('repo') repo:any;
     @Input('repoID') repoID:string;
     @Input('searchOpenedIssues') searchOpenedIssues:any;
+    isIssueClosed:boolean = false;
 
     constructor() { }
     ngOnInit() { }
+    onCloseIssue() {
+        this.isIssueClosed = true;
+    }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'open-issues',
@@ -8,8 +8,12 @@ import { Component, OnInit, Input } from '@angular/core';
 export class OpenIssuesComponent implements OnInit {
     // This component lists the Open Issues
     @Input('repo') repo;
+    @Output('close-issue') closeMe = new EventEmitter();
 
     constructor() { }
     ngOnInit() { }
+    onClose() {
+        this.closeMe.emit();
+    }
 
 }

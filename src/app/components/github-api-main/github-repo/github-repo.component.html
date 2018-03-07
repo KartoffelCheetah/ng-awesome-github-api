@@ -16,11 +16,13 @@
             <span>Description</span><span>{{repo.description}}</span>
         </li>
     </ul>
-    <button class="btn-open-issues" [class.no-issues]="!repo.open_issues_count" type="button" (click)="searchOpenedIssues(repo);">
+    <button class="btn-open-issues" [class.no-issues]="!repo.open_issues_count" type="button" (click)="isIssueClosed=false;searchOpenedIssues(repo);">
         Open Issues: {{repo.open_issues_count}}
     </button>
 </div>
 <open-issues
     *ngIf="repoID==repo.id && repo.issues.length"
-    [repo]="repo">
+    [repo]="repo"
+    (close-issue)="onCloseIssue()"
+    [hidden]=isIssueClosed>
 </open-issues>
